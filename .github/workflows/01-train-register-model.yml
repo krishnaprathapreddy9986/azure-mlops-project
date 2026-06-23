@@ -17,8 +17,8 @@ permissions:
   contents: read
 
 env:
-  AZURE_RESOURCE_GROUP: ${{ vars.AZURE_RESOURCE_GROUP }}
-  AZURE_ML_WORKSPACE: ${{ vars.AZURE_ML_WORKSPACE }}
+  AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+  AZURE_ML_WORKSPACE: ${{ secrets.AZURE_ML_WORKSPACE }}
 
 jobs:
   train-register:
@@ -40,8 +40,8 @@ jobs:
 
       - name: Validate required variables
         run: |
-          test -n "${AZURE_RESOURCE_GROUP}" || (echo "Missing repo variable AZURE_RESOURCE_GROUP" && exit 1)
-          test -n "${AZURE_ML_WORKSPACE}" || (echo "Missing repo variable AZURE_ML_WORKSPACE" && exit 1)
+          test -n "${AZURE_RESOURCE_GROUP}" || (echo "Missing secret AZURE_RESOURCE_GROUP" && exit 1)
+          test -n "${AZURE_ML_WORKSPACE}" || (echo "Missing secret AZURE_ML_WORKSPACE" && exit 1)
 
       - name: Create or update Azure ML environment
         run: |
